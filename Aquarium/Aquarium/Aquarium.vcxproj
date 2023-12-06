@@ -70,6 +70,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\aquarium-g3d\Utils\glew-2.2.0\include;C:\aquarium-g3d\Utils\glm-stable\glm;C:\aquarium-g3d\Utils\glfw-3.3.4.bin.WIN32\include\GLFW;C:\aquarium-g3d\Utils\stb-master;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\aquarium-g3d\Utils\glew-2.2.0\lib\Release\Win32;C:\aquarium-g3d\Utils\glfw-3.3.4.bin.WIN32\lib-vc2019;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
