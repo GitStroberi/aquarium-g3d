@@ -1,56 +1,70 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
+#include "aquarium.h"
+#include "shader.h"
+#include "model.h"
 
-#include <GL/glew.h>
-
-#include <GLM.hpp>
-#include <gtc/matrix_transform.hpp>
-#include <gtc/type_ptr.hpp>
-
-#include <glfw3.h>
-
-#include <iostream>
-
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
-
-#pragma comment (lib, "glfw3dll.lib")
-#pragma comment (lib, "glew32.lib")
-#pragma comment (lib, "OpenGL32.lib")
-
-int main()
-{
-    GLFWwindow* window;
-
-    /* Initialize the library */
+Aquarium::Aquarium(int width, int height, const char* title) {
+    // Initialize GLFW, GLEW, and create a window
     if (!glfwInit())
-        return -1;
+        exit(EXIT_FAILURE);
 
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
-    if (!window)
-    {
+    window = glfwCreateWindow(width, height, title, NULL, NULL);
+    if (!window) {
         glfwTerminate();
-        return -1;
+        exit(EXIT_FAILURE);
     }
 
-    /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        /* Swap front and back buffers */
-        glfwSwapBuffers(window);
-
-        /* Poll for and process events */
-        glfwPollEvents();
+    if (glewInit() != GLEW_OK) {
+        std::cerr << "Error initializing GLEW!" << std::endl;
+        exit(EXIT_FAILURE);
     }
 
+    // Set up other initializations
+    initialize();
+}
+
+Aquarium::~Aquarium() {
+    glfwDestroyWindow(window);
     glfwTerminate();
-    return 0;
+}
+
+void Aquarium::run() {
+    while (!glfwWindowShouldClose(window)) {
+        render();
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+}
+
+void Aquarium::initialize() {
+    // Set up OpenGL settings
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // Set up shaders and models
+    setupShaders();
+    setupModels();
+}
+
+void Aquarium::setupShaders() {
+    // Implement shader loading and compilation
+    // Use Shader class to manage shaders
+}
+
+void Aquarium::setupModels() {
+    // Implement loading and initializing 3D models
+    // Use Model class to manage models
+}
+
+void Aquarium::render() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Implement rendering logic here
+
+    // Example: render a model
+    // model.render(camera.getViewMatrix(), camera.getProjectionMatrix());
+
+    glfwPollEvents();
 }
