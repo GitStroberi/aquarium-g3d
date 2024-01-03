@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{2705ebe7-d3e3-4cc7-a0a0-d6a0cf329154}</ProjectGuid>
+    <ProjectGuid>{7500cc49-ca69-4247-8256-b1e53c3f167e}</ProjectGuid>
     <RootNamespace>Aquarium</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\aquarium-g3d\Utils\glew-2.2.0\include;C:\aquarium-g3d\Utils\glm-stable\glm;C:\aquarium-g3d\Utils\glfw-3.3.4.bin.WIN32\include\GLFW;C:\aquarium-g3d\Utils\stb-master;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\aquarium-g3d\Utils\glew-2.2.0\lib\Release\Win32;C:\aquarium-g3d\Utils\glfw-3.3.4.bin.WIN32\lib-vc2019;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\_external\GLEW\;..\_external\GLFW\;..\_external\glm\;..\_external\stb\;$(IncludePath)</IncludePath>
+    <LibraryPath>..\_external\GLEW\x86\;..\_external\GLFW\x86\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -131,21 +131,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="aquarium.cpp" />
-    <ClCompile Include="camera.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="model.cpp" />
-    <ClCompile Include="shader.cpp" />
-    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="aquarium.h" />
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="model.h" />
-    <ClInclude Include="shader.h" />
-    <ClInclude Include="utils.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Vertex.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Assimp.3.0.0\build\native\Assimp.targets" />
+    <Import Project="..\packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets" />
   </ImportGroup>
 </Project>
