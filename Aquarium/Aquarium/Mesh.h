@@ -20,7 +20,7 @@ public:
 
     unsigned int numIndexes;
     std::shared_ptr <unsigned int> indices;
-    vector<Texture>      textures;
+    vector<Texture> textures;
     unsigned int VAO;
 
     Mesh(const vector<Vertex>& vertices, const vector<unsigned int>& indices, const vector<Texture>& textures);

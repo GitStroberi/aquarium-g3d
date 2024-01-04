@@ -20,9 +20,9 @@ void Model::loadModel(string const& path, bool bSmoothNormals)
 {
     // read file via ASSIMP
     Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | (bSmoothNormals ? aiProcess_GenSmoothNormals : aiProcess_GenNormals) | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | (bSmoothNormals ? aiProcess_GenSmoothNormals : aiProcess_GenNormals) | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
-	// check for errors
+    // check for errors
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
     {
         cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << endl;
@@ -161,7 +161,14 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type,
         if (!skip)
         {   // if texture hasn't been loaded already, load it
             Texture texture;
-            texture.id = TextureFromFile(str.C_Str(), this->directory);
+            std::cout << "start loading texture " << str.C_Str() << std::endl;
+            std::cout << "directory " << directory << std::endl;
+            //current directory is the .obj file directory, so we need to remove the /file.obj part
+            string texture_directory;
+            size_t found = directory.find_last_of("/\\");
+            texture_directory = directory.substr(0, found);
+            std::cout << "texture directory " << texture_directory << std::endl;
+            texture.id = TextureFromFile(str.C_Str(), texture_directory);
             texture.type = typeName;
             texture.path = str.C_Str();
             textures.push_back(texture);
@@ -171,10 +178,12 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type,
     return textures;
 }
 
-unsigned int TextureFromFile(const char* path, const string& directory, bool gamma)
+unsigned int Model::TextureFromFile(const char* path, const string& directory, bool gamma)
 {
     string filename = string(path);
     filename = directory + '/' + filename;
+
+    std::cout << "start loading texture " << filename << std::endl;
 
     unsigned int textureID;
     glGenTextures(1, &textureID);

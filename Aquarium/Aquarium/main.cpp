@@ -383,9 +383,8 @@ int main()
 	std::string objFileName = (currentPath + "\\Models\\CylinderProject.obj");
 	Model objModel(objFileName, false);
 
-	std::string bassObjFileName = (currentPath + "\\Models\\Fish\\bass.obj");
-	std::string bassTextureFileName = (currentPath + "\\Models\\Fish\\bass.png");
-	Model piratObjModel(bassObjFileName, false);
+	std::string bassObjFileName = (currentPath + "\\Models\\Blue_Tang_v1_L3\\13006_Blue_Tang_v1_l3.obj");
+	Model bassObjModel(bassObjFileName, false);
 
 	// render loop
 	while (!glfwWindowShouldClose(window)) {
@@ -417,9 +416,9 @@ int main()
 		//lightingShader.setMat4("model", model);
 		//objModel.Draw(lightingShader);
 
-		glm::mat4 piratModel = glm::scale(glm::mat4(1.0), glm::vec3(1.f));
+		glm::mat4 piratModel = glm::scale(glm::mat4(0.1), glm::vec3(1.f));
 		lightingShader.setMat4("model", piratModel);
-		piratObjModel.Draw(lightingShader);
+		bassObjModel.Draw(lightingShader);
 
 		// also draw the lamp object
 		lampShader.use();

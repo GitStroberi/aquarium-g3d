@@ -144,6 +144,10 @@
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Shaders\Lamp.fs" />
+    <None Include="..\Shaders\Lamp.vs" />
+    <None Include="..\Shaders\PhongLight.fs" />
+    <None Include="..\Shaders\PhongLight.vs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
