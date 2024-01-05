@@ -32,6 +32,7 @@
 #include "Shader.h"
 #include "Plane.h"
 #include "Cube.h"
+#include "Bubbles.h"
 
 //settings
 const unsigned int SCR_WIDTH = 1800;
@@ -207,6 +208,7 @@ Mesh* coral1, * coral2, * coral3, * coral4;
 Plane* overlay;
 Cube* bottomAquarium;
 Cube* topAquarium;
+Bubbles* bubbles;
 
 int main(int argc, char** argv)
 {
@@ -346,6 +348,9 @@ int main(int argc, char** argv)
 		//Update fish position
 		updateFishPosition();
 
+		//Update bubbles
+		bubbles->updateParticles(currentFrame);
+
 		//Water Overlay
 		if (IsPointInsideRegion({ -5,0,-10 }, { 5,4,-4 }, pCamera->GetPosition()))
 		{
@@ -463,8 +468,16 @@ void renderTranslucid(const Shader& shader)
 	shader.Use();
 	glm::mat4 model;
 
-	//sorting the aquarium walls by distance to camera to render them in the right order
+	//sorting the aquarium walls and bubbles by distance to camera to render them in the right order
 	std::vector<IRenderable*> sorted;
+
+	bubbles->updateBillboardRotation(pCamera->GetRightVector(), pCamera->GetUpVector());
+	std::vector<BubbleParticle> particles(bubbles->getParticles());
+
+	for (auto& item : particles)
+	{
+		sorted.push_back(&item);
+	}
 
 	sorted.push_back(front);
 	sorted.push_back(back);
@@ -479,6 +492,10 @@ void renderTranslucid(const Shader& shader)
 	{
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, item->getPosition());
+
+		BubbleParticle* bubble = dynamic_cast<BubbleParticle*>(item);
+		if (bubble)
+			model = glm::scale(model, { bubble->getSize(), bubble->getSize(), bubble->getSize() });
 
 		shader.SetMat4("model", model);
 		glActiveTexture(GL_TEXTURE0);
@@ -503,6 +520,7 @@ void createObjects()
 	unsigned int floorTexture = CreateTexture(strExePath + "\\..\\Models\\cover.jpg");
 	unsigned int waterTexture = CreateTexture(strExePath + "\\..\\Models\\water.png");
 	unsigned int sandTexture = CreateTexture(strExePath + "\\..\\Models\\sand.png");
+	unsigned int bubbleTexture = CreateTexture(strExePath + "\\..\\Models\\bubble.png");
 
 	//Aquarium top lid and bottom stand
 	bottomAquarium = new Cube(10.0f, 1.0f, 6.0f, { 0.0,-0.5,-7.0 }, TEXSCALE::TS_SCALE);
@@ -621,6 +639,9 @@ void createObjects()
 		coral4->setPosition({ 0,0.65,-3 });
 	}
 	coral4->setDiffuseTextureId(coralTexture4);
+
+	bubbles = new Bubbles(.1, .1);
+	bubbles->setDiffuseTextureId(bubbleTexture);
 
 	overlay = new Plane(25, 25, { 0,0,0 }, TS_NO_SCALE, OR_XY);
 	overlay->setDiffuseTextureId(insideWaterTexture);
