@@ -35,8 +35,8 @@
 #include "Bubbles.h"
 
 //settings
-const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 900;
+const unsigned int SCR_WIDTH = 1280;
+const unsigned int SCR_HEIGHT = 720;
 std::string strExePath;
 
 Mesh* CreateObj(const std::string& strObjPath)
@@ -225,7 +225,7 @@ int main(int argc, char** argv)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//glfw window creation
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Fish Tank OpenGl", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Aquarium", NULL, NULL);
 	if (window == NULL) {
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
@@ -243,7 +243,7 @@ int main(int argc, char** argv)
 	glewInit();
 
 	//Create camera
-	pCamera = new Camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0, 2.0, 5.0));
+	pCamera = new Camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0, 2.0, 3.0));
 
 	//Depth Testing
 	glEnable(GL_DEPTH_TEST);
@@ -285,7 +285,7 @@ int main(int argc, char** argv)
 	//Create objects
 	createObjects();
 
-	glm::vec3 lightPos(0.0f, 3.0f, -0.5f);
+	glm::vec3 lightPos(0.0f, 5.0f, -2.0f);
 
 	//render loop
 	while (!glfwWindowShouldClose(window))
