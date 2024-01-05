@@ -188,7 +188,6 @@ void renderSky(const Shader& shader);
 void renderScene(const Shader& shader);
 void renderTranslucid(const Shader& shader);
 void renderInsideWaterOverlay(const Shader& shader);
-void subrenderRoom(const Shader& shader);
 void subrenderObjects(const Shader& shader);
 
 
@@ -294,8 +293,6 @@ int main(int argc, char** argv)
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-		//std::cout << 1 / deltaTime << "\n";
-
 		//Input
 		processInput(window);
 
@@ -393,14 +390,6 @@ void updateFishPosition()
 	}
 }
 
-void subrenderRoom(const Shader& shader)
-{
-	glDisable(GL_CULL_FACE);
-
-	//Sand
-	sandFloor->renderBasic(shader);
-}
-
 void subrenderObjects(const Shader& shader)
 {
 	glEnable(GL_CULL_FACE);
@@ -463,7 +452,8 @@ void subrenderObjects(const Shader& shader)
 void renderScene(const Shader& shader)
 {
 	shader.Use();
-	subrenderRoom(shader);
+	glDisable(GL_CULL_FACE);
+	sandFloor->renderBasic(shader);
 	subrenderObjects(shader);
 }
 
@@ -473,8 +463,8 @@ void renderTranslucid(const Shader& shader)
 	shader.Use();
 	glm::mat4 model;
 
+	//sorting the aquarium walls by distance to camera to render them in the right order
 	std::vector<IRenderable*> sorted;
-
 
 	sorted.push_back(front);
 	sorted.push_back(back);
@@ -514,7 +504,7 @@ void createObjects()
 	unsigned int waterTexture = CreateTexture(strExePath + "\\..\\Models\\water.png");
 	unsigned int sandTexture = CreateTexture(strExePath + "\\..\\Models\\sand.png");
 
-	//Table
+	//Aquarium top lid and bottom stand
 	bottomAquarium = new Cube(10.0f, 1.0f, 6.0f, { 0.0,-0.5,-7.0 }, TEXSCALE::TS_SCALE);
 	bottomAquarium->setDiffuseTextureId(floorTexture);
 
@@ -537,8 +527,7 @@ void createObjects()
 	sandFloor = new Plane(10, 6, { 0, 0, -7 }, TS_NO_SCALE, OR_XZ);
 	sandFloor->setDiffuseTextureId(sandTexture);
 
-
-	//Aquarium dynamic life
+	//Aquarium fishes
 	fish1 = CreateObj(strExePath + "\\..\\Models\\Blue_Tang_v1_L3\\13006_Blue_Tang_v1_l3.obj");
 	unsigned fishTexture1 = CreateTexture(strExePath + "\\..\\Models\\Blue_Tang_v1_L3\\13006_Blue_Tang_v1_diff.jpg");
 	fish1->setDiffuseTextureId(fishTexture1);
@@ -642,24 +631,23 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
-	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(FORWARD, (float)deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(BACKWARD, (float)deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(LEFT, (float)deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(RIGHT, (float)deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(UP, (float)deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(DOWN, (float)deltaTime);
 
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
 		int width, height;
 		glfwGetWindowSize(window, &width, &height);
 		pCamera->Reset(width, height);
-
 	}
 }
 

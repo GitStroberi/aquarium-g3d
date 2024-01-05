@@ -59,16 +59,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="..\Shaders\ShadowMapping.fs">
+    <None Include="ShadowMapping.fs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Shaders\ShadowMapping.vs">
+    <None Include="ShadowMapping.vs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Shaders\Water.fs">
+    <None Include="Water.fs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Shaders\Water.vs">
+    <None Include="Water.vs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

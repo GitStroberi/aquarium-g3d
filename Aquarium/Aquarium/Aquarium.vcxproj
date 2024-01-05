@@ -148,11 +148,11 @@
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Shaders\ShadowMapping.fs" />
-    <None Include="..\Shaders\ShadowMapping.vs" />
-    <None Include="..\Shaders\Water.fs" />
-    <None Include="..\Shaders\Water.vs" />
     <None Include="packages.config" />
+    <None Include="ShadowMapping.fs" />
+    <None Include="ShadowMapping.vs" />
+    <None Include="Water.fs" />
+    <None Include="Water.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

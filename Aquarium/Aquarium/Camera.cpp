@@ -71,24 +71,24 @@ const glm::mat4 Camera::GetProjectionMatrix() const
 
 void Camera::ProcessKeyboard(ECameraMovementType direction, float deltaTime)
 {
-    float velocity = (float)(cameraSpeedFactor * deltaTime);
+    float velocity = cameraSpeedFactor * deltaTime;
     switch (direction) {
-    case ECameraMovementType::FORWARD:
+    case FORWARD:
         position += forward * velocity;
         break;
-    case ECameraMovementType::BACKWARD:
+    case BACKWARD:
         position -= forward * velocity;
         break;
-    case ECameraMovementType::LEFT:
+    case LEFT:
         position -= right * velocity;
         break;
-    case ECameraMovementType::RIGHT:
+    case RIGHT:
         position += right * velocity;
         break;
-    case ECameraMovementType::UP:
+    case UP:
         position += up * velocity;
         break;
-    case ECameraMovementType::DOWN:
+    case DOWN:
         position -= up * velocity;
         break;
     }
@@ -141,9 +141,6 @@ void Camera::ProcessMouseMovement(float xOffset, float yOffset, bool constrainPi
 {
     yaw += xOffset;
     pitch += yOffset;
-
-    //std::cout << "yaw = " << yaw << std::endl;
-    //std::cout << "pitch = " << pitch << std::endl;
 
     if (constrainPitch) {
         if (pitch > 89.0f)
