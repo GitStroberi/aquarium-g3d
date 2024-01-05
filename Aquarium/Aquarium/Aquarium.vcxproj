@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\_external\GLEW\;..\_external\GLFW\;..\_external\glm\;..\_external\stb\;$(IncludePath)</IncludePath>
-    <LibraryPath>..\_external\GLEW\x86\;..\_external\GLFW\x86\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\_external\glew-2.1.0\include;..\_external\glm\glm-stable\glm;..\_external\freeglut\include;..\_external\glfw\glfw-3.3.4.bin.WIN32\include\GLFW;..\_external\stb\stb-master;..\_external\tiny_obj_loader;$(IncludePath)</IncludePath>
+    <LibraryPath>..\_external\glew-2.1.0\lib\Release\Win32;..\_external\freeglut\lib;..\_external\glfw\glfw-3.3.4.bin.WIN32\lib-vc2019;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -131,23 +131,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cube.h" />
+    <ClInclude Include="IRenderable.h" />
     <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Model.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Shaders\Lamp.fs" />
-    <None Include="..\Shaders\Lamp.vs" />
-    <None Include="..\Shaders\PhongLight.fs" />
-    <None Include="..\Shaders\PhongLight.vs" />
+    <None Include="..\Shaders\ShadowMapping.fs" />
+    <None Include="..\Shaders\ShadowMapping.vs" />
+    <None Include="..\Shaders\Water.fs" />
+    <None Include="..\Shaders\Water.vs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
