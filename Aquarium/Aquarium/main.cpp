@@ -444,7 +444,7 @@ void subrenderObjects(const Shader& shader)
 	coral3->renderCustomModel(shader, model);
 
 	model = glm::mat4();
-	model = glm::translate(model, coral3->getPosition() + glm::vec3{ -3,0.36,-1.6 });
+	model = glm::translate(model, coral3->getPosition() + glm::vec3{ -3,0.36,-2.6 });
 	model = glm::scale(model, { 3, 3, 3 });
 	coral4->renderCustomModel(shader, model);
 
